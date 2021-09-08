@@ -1,0 +1,54 @@
+{% extends 'UserLogin/index.html' %}
+{% load static %}
+
+{% block register %}
+<section class="signup">
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-form">
+                <h2 class="form-title">Sign Up</h2>
+                <form method="POST" class="register-form" id="register-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username"><i class="zmdi zmdi-account material-icons-name mb-4"></i></label>
+                        {{ register.username }}
+                        <span class="error text-danger">{{ register.username.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_email"><i class="zmdi zmdi-email mb-4"></i></label>
+                        {{ register.email }}
+                        <span class="error text-danger">{{ register.email.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_first_name"><i class="zmdi zmdi-account material-icons-name mb-4"></i></label>
+                        {{ register.first_name }}
+                        <span class="error text-danger">{{ register.first_name.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_last_name"><i class="zmdi zmdi-account material-icons-name mb-4"></i></label>
+                        {{ register.last_name }}
+                        <span class="error text-danger">{{ register.last_name.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass"><i class="zmdi zmdi-lock mb-4"></i></label>
+                        {{ register.password1 }}
+                        <span class="error text-danger">{{ register.password1.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="re-pass"><i class="zmdi zmdi-lock-outline mb-4"></i></label>
+                        {{ register.password2 }}
+                        <span class="error text-danger">{{ register.password2.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                    </div>
+                </form>
+            </div>
+            <div class="signup-image">
+                <figure><img src="{% static 'UserLogin/images/signup-image.jpg' %}" alt="Sign Up Image"></figure>
+                <a href="{% url 'Login' %}" class="signup-image-link">Already a member</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock register %}

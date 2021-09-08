@@ -1,0 +1,8 @@
+{% extends 'UserLogin/index.html' %}
+{% load static %}
+
+{% block main %}
+<div class="container">
+    <embed src="{{ pdf_model.pdf.url }}" type="application/pdf" width="100%" height="600px">
+</div>
+{% endblock main %}

@@ -1,0 +1,43 @@
+{% extends 'UserLogin/index.html' %}
+{% load static %}
+
+{% block login %}
+<section class="sign-in">
+    <div class="container">
+        {% if login.non_field_errors %}
+        <h3 class="text-danger">{{ login.non_field_errors.as_text }}</h3>
+        {% endif %}
+        <div class="signin-content">
+            <div class="signin-image">
+                <figure><img src="{% static 'UserLogin/images/signin-image.jpg' %}" alt="Sign Up Image"></figure>
+                <a href="{% url 'Register' %}" class="signup-image-link">Create an account</a>
+            </div>
+
+            <div class="signin-form">
+                <h2 class="form-title">Sign In</h2>
+                <form method="POST" class="register-form" id="login-form">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username"><i class="zmdi zmdi-account material-icons-name mb-4"></i></label>
+                        {{ login.username }}
+                        <span class="error text-danger">{{ login.username.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password"><i class="zmdi zmdi-lock mb-4"></i></label>
+                        {{ login.password }}
+                        <span class="error text-danger">{{ login.password.errors | striptags }}</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
+                        <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember
+                            me</label>
+                    </div>
+                    <div class="form-group form-button">
+                        <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock login %}

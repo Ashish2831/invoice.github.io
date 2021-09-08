@@ -1,0 +1,50 @@
+{% extends 'Userlogin/index.html' %}
+{% load static %}
+
+{% block css %}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="{% static 'UserLogin/css/third.css' %}">
+
+<style>
+    #publish:hover {
+        background-color: aqua;
+        color: white;
+    }
+</style>
+{% endblock css %}
+
+{% block main %}
+<div class="container contact-form">
+    <div class="contact-image">
+        <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact" />
+    </div>
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Third Blog Template</h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="text" name="title" class="form-control" placeholder="Title *" value="" />
+                </div>
+            </div>
+            <div class="col-md-12 mt-4">
+                <div class="form-group">
+                    <textarea name="txtMsg" class="form-control" placeholder="Description *"
+                        style="width: 100%; height: 150px;"></textarea>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-4">
+                <div class="form-group">
+                    <input id="publish" type="submit" name="publish" class="form-control" value="Publish" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock main %}
+
+{% block script %}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock script %}

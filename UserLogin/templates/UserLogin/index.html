@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>User Login System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{% static 'UserLogin/fonts/material-icon/css/material-design-iconic-font.min.css' %}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{% static 'UserLogin/css/style.css' %}">
+
+    {% block css %}{% endblock css %}
+    {% block style %}{% endblock style %}
+
+    <style>
+        .error {
+            display: inline-block;
+            margin-left: 26px;
+            margin-top: 6px;
+        }
+
+        {% if request.user.is_authenticated %}
+        #navbarNav {
+            margin-left: 65%;
+        }
+        {% else %}
+        #navbarNav {
+            margin-left: 85%;
+        }
+        {% endif %} 
+
+        .nav-link {
+            font-size: 20px;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+            background-color: aqua;
+            border-radius: 10px;
+        }
+
+        @media only screen and (max-width:1000px) {
+            #navbarNav {
+                margin-left: 0%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light m-2">
+        <a class="navbar-brand" href="#"><img width="40" height="40" src="{% static 'UserLogin/images/logo.jpg' %}"
+                alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Dashboard' request.user.id %}">Dashboard</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Logout' %}">Logout</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Templates
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'First' %}">First</a></li>
+                        <li><a class="dropdown-item" href="{% url 'Second' %}">Second</a></li>
+                        <li><a class="dropdown-item" href="{% url 'Third' %}">Third</a></li>
+                        <li><a class="dropdown-item" href="{% url 'Fourth' %}">Fourth</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'Login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+    <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+        {% if success %}
+        <h4 class="text-center">The PDF is Available at <a href="{{ message }}">{{ message }}</a></h4>
+        {%else%}
+        <h4 class="text-center">{{ message }}</h4>
+        {% endif %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% else %}
+    <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+        <h4 class="text-center">{{ message }}</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    {% block main %}
+    <div class="main">
+        {% block register %}{% endblock register %}
+        {% block login %}{% endblock login %}
+    </div>
+    {% endblock main %}
+
+    <footer class="py-5 bg-dark">
+        <div class="container px-4">
+            <p class="m-0 text-center">Created with Love ❤ By Ashish Patil</p>
+        </div>
+    </footer>
+
+    {% block script %}{% endblock script %}
+    <!-- Bootstrap jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+        integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"
+        integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+    <script src="{% static 'UserLogin/js/main.js' %}"></script>
+</body>
+
+</html>

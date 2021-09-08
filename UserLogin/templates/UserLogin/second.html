@@ -1,0 +1,30 @@
+{% extends 'UserLogin/index.html' %}
+{% load static %}
+
+{% block css %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="stylesheet" href="{% static 'UserLogin/css/second.css' %}">
+{% endblock css %}
+
+{% block main %}
+<section class="get-in-touch">
+    <h1 class="title">Second Blog Template</h1>
+    <form method="POST" class="contact-form row">
+        {% csrf_token %}
+        <div class="form-field col-lg-12">
+            <input id="title" class="input-text js-input" type="text" placeholder="Title" required>
+        </div>
+        <div class="form-field col-lg-12">
+            <input name="description" id="description" class="input-text js-input" placeholder="Description" required>
+        </div>
+        <div class="form-field col-lg-12">
+            <input class="submit-btn" type="submit" value="Publish">
+        </div>
+    </form>
+</section>
+{% endblock main %}
+
+{% block script %}
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+{% endblock script %}

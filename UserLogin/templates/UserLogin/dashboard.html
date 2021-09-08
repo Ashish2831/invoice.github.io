@@ -1,0 +1,43 @@
+{% extends "UserLogin/index.html" %}
+{% load static %}
+
+{% block style %}
+<style>
+    .main {
+        padding: 10px;
+    }
+
+    .row {
+        margin: 8%;
+    }
+
+    @media only screen and (max-width:1000px) {
+        .template {
+            margin: 5% 0%;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block main %}
+<div class="container-fluid main">
+    <h1 class="text-center alert-primary m-2 p-2">Blog Templates</h1>
+    <div class="row">
+        <div class="col-lg-6 col-12 template">
+            <a href="{% url 'First' %}"><img src="{% static 'UserLogin/images/first.jpg' %}" alt="First Template"></a>
+        </div>
+        <div class="col-lg-6 col-12 template">
+            <a href="{% url 'Third' %}"><img src="{% static 'UserLogin/images/second.jpg' %}" alt="Second Template"></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-12 template">
+            <a href="{% url 'Second' %}"><img src="{% static 'UserLogin/images/third.jpg' %}" alt="Third Template"></a>
+        </div>
+        <div class="col-lg-6 col-12 template">
+            <a href="{% url 'Fourth' %}"><img src="{% static 'UserLogin/images/fourth.jpg' %}"
+                    alt="Fourth Template"></a>
+        </div>
+    </div>
+</div>
+{% endblock main %}

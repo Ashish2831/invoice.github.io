@@ -1,0 +1,49 @@
+{% extends "UserLogin/index.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'UserLogin/css/otp.css' %}">
+
+<style>
+    .container {
+        height: 0%;
+    }
+</style>
+{% endblock css %}
+
+{% block register %}
+<div class="d-flex justify-content-center align-items-center container">
+    <form method="POST" class="card">
+        {% csrf_token %}
+        <h5 class="m-0">Email verification</h5><span class="mobile-text">Enter the code we have just send on your
+            email<b class="text-danger"> <span id="email"></span></b></span>
+        <div class="d-flex flex-row mt-5 mb-5">
+            <input id="input-1" name="input-1" type="text" class="form-control" autofocus="">
+            <input id="input-2" name="input-2" type="text" class="form-control">
+            <input id="input-3" name="input-3" type="text" class="form-control">
+            <input id="input-4" name="input-4" type="text" class="form-control">
+        </div>
+        <input type="hidden" name="otp-hidden" id="otp-hidden">
+        <input id="otp-submit" type="submit" class="form-control" value="Submit">
+    </form>
+</div>
+{% endblock register %}
+
+{% block script %}
+<script>
+    window.onload = async () => {
+        let result = prompt("Enter Your Email");
+        const regex = /^([_\-\.a-zA-Z0-9]+)@([_\-\.a-zA-Z0-9]+)\.([a-zA-Z]){2,8}$/;
+        while (result === null || regex.test(result) === false) {
+            alert('Please Enter Valid Email')
+            result = prompt("Enter Your Email");
+        }
+        document.getElementById('email').innerHTML = result;
+
+        const response = await fetch(`/otp/${result}/`);
+        const otp_json = await response.json();
+        const otp = otp_json['otp'];
+        document.getElementById('otp-hidden').value = otp;
+    }
+</script>
+{% endblock script %}
