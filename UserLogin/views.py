@@ -16,7 +16,9 @@ import random
 import uuid
 
 # Create your views here.
-
+class Home(View):
+    def get(self, request):
+        return HttpResponseRedirect('/login/')
 
 class Register(View):
     def get(self, request):
@@ -111,10 +113,17 @@ class First(View):
 
     def post(self, request):
         pdf_model = PDFModel()
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        if len(title.strip()) == 0 or len(description.strip()) == 0:
+            messages.error(request, "All The Fields Are Compulsory!!!")
+            return render(request, 'UserLogin/first.html')
+
         params = {
             'id': request.user.id,
-            'title': request.POST.get('title'),
-            'description': request.POST.get('description'),
+            'title': title,
+            'description': description,
         }
 
         file_name, status = save_pdf(params)
@@ -138,10 +147,17 @@ class Second(View):
 
     def post(self, request):
         pdf_model = PDFModel()
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        if len(title.strip()) == 0 or len(description.strip()) == 0:
+            messages.error(request, "All The Fields Are Compulsory!!!")
+            return render(request, 'UserLogin/second.html')
+
         params = {
             'id': request.user.id,
-            'title': request.POST.get('title'),
-            'description': request.POST.get('description'),
+            'title': title,
+            'description': description,
         }
 
         file_name, status = save_pdf(params)
@@ -165,10 +181,17 @@ class Third(View):
 
     def post(self, request):
         pdf_model = PDFModel()
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        if len(title.strip()) == 0 or len(description.strip()) == 0:
+            messages.error(request, "All The Fields Are Compulsory!!!")
+            return render(request, 'UserLogin/third.html')
+
         params = {
             'id': request.user.id,
-            'title': request.POST.get('title'),
-            'description': request.POST.get('description'),
+            'title': title,
+            'description': description,
         }
 
         file_name, status = save_pdf(params)
@@ -192,10 +215,18 @@ class Fourth(View):
 
     def post(self, request):
         pdf_model = PDFModel()
+        print(request.POST)
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+
+        if len(title.strip()) == 0 or len(description.strip()) == 0:
+            messages.error(request, "All The Fields Are Compulsory!!!")
+            return render(request, 'UserLogin/fourth.html')
+
         params = {
             'id': request.user.id,
-            'title': request.POST.get('title'),
-            'description': request.POST.get('description'),
+            'title': title,
+            'description': description,
         }
 
         file_name, status = save_pdf(params)
@@ -217,7 +248,7 @@ class PDF(View):
             return HttpResponseRedirect(f'/login/')
         try:
             pdf_model = PDFModel.objects.get(pk=id)
-            if pdf_model.count < 1:
+            if pdf_model.count < 5:
                 pdf_model.count += 1
                 pdf_model.save()
                 return render(request, 'UserLogin/otp.html')
@@ -234,9 +265,9 @@ class PDF(View):
         input_3 = post_data.get('input-3')
         input_4 = post_data.get('input-4')
         user_otp = f"{input_1}{input_2}{input_3}{input_4}"
-        if otp == user_otp:
+        if otp != "" and user_otp != "" and otp == user_otp:
             pdf_model = PDFModel.objects.get(pk=id)
             return FileResponse(open(f"media/{pdf_model.pdf.name}", "rb"), content_type="application/pdf")
         else:
             messages.error(request, "Invalid OTP!!!")
-            return render(request, 'UserLogin/otp.html', {'error': True})
+            return render(request, 'UserLogin/otp.html', {'error': True, 'send_otp' : otp})

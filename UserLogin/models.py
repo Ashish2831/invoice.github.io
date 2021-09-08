@@ -8,5 +8,5 @@ class PDFModel(models.Model):
 
     def delete(self):
         if os.path.isfile(self.pdf.path):
-            os.path.remove(self.pdf.path)
+            os.remove(self.pdf.path)
         super(PDFModel, self).delete()

@@ -31,19 +31,29 @@
 
 {% block script %}
 <script>
+    {% if error == false %}
     window.onload = async () => {
         let result = prompt("Enter Your Email");
         const regex = /^([_\-\.a-zA-Z0-9]+)@([_\-\.a-zA-Z0-9]+)\.([a-zA-Z]){2,8}$/;
-        while (result === null || regex.test(result) === false) {
-            alert('Please Enter Valid Email')
-            result = prompt("Enter Your Email");
-        }
-        document.getElementById('email').innerHTML = result;
 
-        const response = await fetch(`/otp/${result}/`);
-        const otp_json = await response.json();
-        const otp = otp_json['otp'];
-        document.getElementById('otp-hidden').value = otp;
+        if (result === null) {
+            console.log(result);
+            window.location.href = "/login/";
+        } else {
+            while (regex.test(result) === false) {
+                alert('Please Enter Valid Email');
+                result = prompt("Enter Your Email");
+            }
+            document.getElementById('email').innerHTML = result;
+
+            const response = await fetch(`/otp/${result}/`);
+            const otp_json = await response.json();
+            const otp = otp_json['otp'];
+            document.getElementById('otp-hidden').value = otp;
+        }
     }
+    {% else %}
+    document.getElementById('otp-hidden').value = {{ send_otp }};
+    {% endif %}
 </script>
 {% endblock script %}

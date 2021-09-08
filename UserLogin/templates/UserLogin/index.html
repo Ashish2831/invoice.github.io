@@ -28,15 +28,25 @@
             margin-top: 6px;
         }
 
-        {% if request.user.is_authenticated %}
+            {
+            % if request.user.is_authenticated %
+        }
+
         #navbarNav {
             margin-left: 65%;
         }
-        {% else %}
-        #navbarNav {
-            margin-left: 85%;
+
+            {
+            % else %
         }
-        {% endif %} 
+
+        #navbarNav {
+            margin-left: 50%;
+        }
+
+            {
+            % endif %
+        }
 
         .nav-link {
             font-size: 20px;
@@ -55,6 +65,17 @@
                 margin-left: 0%;
             }
         }
+
+        #name {
+            font-size: 26px;
+            color: #5e7b15;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        #name:hover {
+            color: aqua;
+        }
     </style>
 </head>
 
@@ -66,6 +87,10 @@
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        {% if request.user.is_authenticated %}
+        <h3 id="name">Welcome {{ request.user }}</h3>
+        {% else %}
+        {% endif %}
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {% if request.user.is_authenticated %}
@@ -102,7 +127,7 @@
     <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
         {% if success %}
         <h4 class="text-center">The PDF is Available at <a href="{{ message }}">{{ message }}</a></h4>
-        {%else%}
+        {% else %}
         <h4 class="text-center">{{ message }}</h4>
         {% endif %}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
